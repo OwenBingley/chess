@@ -68,10 +68,24 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
       //for (.....)  
 //        	populate the board with squares here. Note that the board is composed of 64 squares alternating from 
 //        	white to black.
+        board[0][0] = new Square(this, true, 0, 0);
+        this.add(board[0][0]);
         
-        
+         for (int row=0;row<8;row++){
+          for (int col=0;col<8;col++){
+         if(row%2 ==0){
+         board[row][col]= new Square(this, true, row, col);
+
+
+         }
+
+         }
+
+         }
+       
+       
         initializePieces();
-        
+      
 
         this.setPreferredSize(new Dimension(400, 400));
         this.setMaximumSize(new Dimension(400, 400));
@@ -162,6 +176,10 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     }
 
     //TO BE IMPLEMENTED!
+
+
+
+
     //should move the piece to the desired location only if this is a legal move.
     //use the pieces "legal move" function to determine if this move is legal, then complete it by
     //moving the new piece to it's new board location. 
