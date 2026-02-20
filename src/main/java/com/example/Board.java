@@ -68,21 +68,26 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
       //for (.....)  
 //        	populate the board with squares here. Note that the board is composed of 64 squares alternating from 
 //        	white to black.
-        board[0][0] = new Square(this, true, 0, 0);
-        this.add(board[0][0]);
-        
-         for (int row=0;row<8;row++){
-          for (int col=0;col<8;col++){
-         if(row%2 ==0){
-         board[row][col]= new Square(this, true, row, col);
-
-
-         }
-
-         }
-
-         }
        
+        
+         for (int row = 0; row < 8; row++) {
+    for (int col = 0; col < 8; col++) {
+
+        boolean isWhiteSquare = (row + col) % 2 == 0; 
+        board[row][col] = new Square(this, isWhiteSquare, row, col);
+
+        this.add(board[row][col]); 
+    }
+}
+
+
+         
+
+    
+    
+
+         
+    
        
         initializePieces();
       
@@ -100,12 +105,22 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 	//set up the board such that the black pieces are on one side and the white pieces are on the other.
 	//since we only have one kind of piece for now you need only set the same number of pieces on either side.
 	//it's up to you how you wish to arrange your pieces.
-    void initializePieces() {
-    	
-    	// board[0][0].put(new Piece(true, path+ RESOURCES_WKING_PNG));
-        
+   void initializePieces() {
 
+    // are examples to make own peice 
+    for (int col = 0; col < 8; col++) {
+        board[6][col].put(new Piece(true, "Pictures/wpawn.png"));
     }
+
+    // are examples to make own peice 
+    for (int col = 0; col < 8; col++) {
+        board[1][col].put(new Piece(false, "Pictures/bpawn.png"));
+    }
+
+    // are examples to make own peice 
+    board[7][4].put(new Piece(true, "Pictures/wking.png"));
+    board[0][4].put(new Piece(false, "Pictures/bking.png"));
+}
 
     public Square[][] getSquareArray() {
         return this.board;
@@ -184,16 +199,30 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     //use the pieces "legal move" function to determine if this move is legal, then complete it by
     //moving the new piece to it's new board location. 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        Square endSquare = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
-        
-        //using currPiece
-        
-       
-        fromMoveSquare.setDisplay(true);
-        currPiece = null;
-        repaint();
+public void mouseReleased(MouseEvent e) {
+
+    if (currPiece == null) return;
+
+    Square endSquare = (Square) this.getComponentAt(
+            new Point(e.getX(), e.getY())
+    );
+
+    // Basic move — no rules yet
+    if (endSquare != null) {
+
+        if (endSquare != fromMoveSquare) {
+
+            endSquare.put(currPiece);
+            fromMoveSquare.put(null);
+
+            whiteTurn = !whiteTurn; // switch turns
+        }
     }
+
+    fromMoveSquare.setDisplay(true);
+    currPiece = null;
+    repaint();
+}
 
     @Override
     public void mouseDragged(MouseEvent e) {
