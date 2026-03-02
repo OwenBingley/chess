@@ -16,6 +16,23 @@ import javax.swing.*;
 //suggested order of completion that should make testing easier.
 @SuppressWarnings("serial")
 public class Board extends JPanel implements MouseListener, MouseMotionListener {
+    public static final String PICTURE_PATH = "/src/main/java/com/example/Pictures/";
+    public static final String RESOURCES_AMAZON_PNG = PICTURE_PATH + "amazon.png";
+    public static final String RESOURCES_BAMAZON_PNG = PICTURE_PATH + "blackAmazon.png";
+    private static final String RESOURCES_WBISHOP_PNG = PICTURE_PATH + "wbishop.png";
+    private static final String RESOURCES_BBISHOP_PNG = PICTURE_PATH + "bbishop.png";
+    private static final String RESOURCES_WKNIGHT_PNG = PICTURE_PATH + "wknight.png";
+    private static final String RESOURCES_BKNIGHT_PNG = PICTURE_PATH + "bknight.png";
+    private static final String RESOURCES_WROOK_PNG = PICTURE_PATH + "wrook.png";
+    private static final String RESOURCES_BROOK_PNG = PICTURE_PATH + "brook.png";
+    private static final String RESOURCES_WKING_PNG = PICTURE_PATH + "wking.png";
+    private static final String RESOURCES_BKING_PNG = PICTURE_PATH + "bking.png";
+    private static final String RESOURCES_BQUEEN_PNG = PICTURE_PATH + "bqueen.png";
+    private static final String RESOURCES_WQUEEN_PNG = PICTURE_PATH + "wqueen.png";
+    private static final String RESOURCES_WPAWN_PNG = PICTURE_PATH + "wpawn.png";
+    private static final String RESOURCES_BPAWN_PNG = PICTURE_PATH + "bpawn.png";
+
+
     // Logical and graphical representations of board
     private final Square[][] board;
     private final GameWindow g;
@@ -66,9 +83,9 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     void initializePieces() {
         
 
-        // Amazons (one black, one white)
-        board[7][3].put(new Piece(true, "src/main/java/com/example/Pictures/amazon.png"));
-        board[0][3].put(new Piece(false, "Pictures/amazon.png"));
+        // Amazons 
+        board[7][3].put(new Piece(true,   RESOURCES_AMAZON_PNG));
+        board[0][3].put(new Piece(false, RESOURCES_BAMAZON_PNG ));
     }
 
     public Square[][] getSquareArray() {
