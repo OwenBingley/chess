@@ -84,7 +84,7 @@ public class Piece {
         return control;
     }
 
-    //TO BE IMPLEMENTED!
+    
     // Returns all legal moves for the Amazon
     // Rules: Moves like Knight or Queen, cannot move off the board, cannot capture own pieces
     public ArrayList<Square> getLegalMoves(Board b, Square start){
@@ -93,7 +93,7 @@ public class Piece {
         int r = start.getRow();
         int c = start.getCol();
 
-        // Knight moves
+        // Knight 
         int[][] knightOffsets = {
             {-2, -1}, {-2, 1}, {2, -1}, {2, 1},
             {-1, -2}, {-1, 2}, {1, -2}, {1, 2}
@@ -109,7 +109,7 @@ public class Piece {
             }
         }
 
-        // Queen-like sliding moves
+        // Queen
         int[][] directions = {
             {1,0},{-1,0},{0,1},{0,-1},
             {1,1},{1,-1},{-1,1},{-1,-1}

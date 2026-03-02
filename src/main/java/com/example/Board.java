@@ -132,6 +132,9 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         if (sq.isOccupied()) {
             currPiece = sq.getOccupyingPiece();
             fromMoveSquare = sq;
+            for(Square s: currPiece.getLegalMoves(this, sq)){
+                s.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.RED));
+            }
             if (currPiece.getColor() != whiteTurn)
                 return;
             sq.setDisplay(false);
@@ -144,6 +147,11 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     //moving the new piece to its new board location.
     @Override
     public void mouseReleased(MouseEvent e) {
+        for(Square [] row: board){
+            for(Square s: row){
+                s.setBorder(null);
+            }
+        }
         if (currPiece == null) return;
 
         Square endSquare = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
