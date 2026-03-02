@@ -14,13 +14,16 @@ public class Piece {
     private final boolean color;
     private BufferedImage img;
 
-    // Constructor for a piece. Loads the image file
+    /**
+     * PRE-condition: isWhite is true for white, false for black.
+     *      img_file is a valid path to an image file.
+     * POST-condition: Initializes a Piece with its color and loads its image into memory.
+     */
     public Piece(boolean isWhite, String img_file) {
         this.color = isWhite;
 
         try {
             if (this.img == null) {
-                // Load image from the project folder
                 this.img = ImageIO.read(new File(System.getProperty("user.dir") + "/" + img_file));
             }
         } catch (IOException e) {
@@ -28,26 +31,36 @@ public class Piece {
         }
     }
 
-    // Returns true for white, false for black
+    /**
+     * PRE-condition: none
+     * POST-condition: returns true if this piece is white, false if black.
+     */
     public boolean getColor() {
         return color;
     }
 
-    // Returns the image of this piece
+    /**
+     * PRE-condition: image was loaded correctly in constructor.
+     * POST-condition: returns the Image object for this piece.
+     */
     public Image getImage() {
         return img;
     }
 
-    // Draw the piece onto a square
+    /**
+     * PRE-condition: g is a valid Graphics object; currentSquare is not null.
+     * POST-condition: draws this piece's image scaled to fit the given square.
+     */
     public void draw(Graphics g, Square currentSquare) {
-        int x = 0; // draw from top-left of the square
+        int x = 0;
         int y = 0;
         g.drawImage(this.img, x, y, currentSquare.getWidth(), currentSquare.getHeight(), null);
     }
 
-    // TO BE IMPLEMENTED!
-    // Return a list of squares this piece controls
-    // The Amazon controls like a Queen + Knight
+    /**
+     * PRE-condition: board is an 8x8 array of Squares, start is a valid Square containing this piece.
+     * POST-condition: returns all squares this piece attacks (Amazon = Queen + Knight control).
+     */
     public ArrayList<Square> getControlledSquares(Square[][] board, Square start) {
         ArrayList<Square> control = new ArrayList<>();
         int r = start.getRow();
@@ -65,7 +78,7 @@ public class Piece {
                 control.add(board[rr][cc]);
         }
 
-        // Queen-like sliding moves
+        // Queen sliding moves
         int[][] directions = {
             {1,0},{-1,0},{0,1},{0,-1},
             {1,1},{1,-1},{-1,1},{-1,-1}
@@ -75,7 +88,7 @@ public class Piece {
             int cc = c + d[1];
             while (rr >= 0 && rr < 8 && cc >= 0 && cc < 8) {
                 control.add(board[rr][cc]);
-                if (board[rr][cc].isOccupied()) break; // blocked beyond
+                if (board[rr][cc].isOccupied()) break;
                 rr += d[0];
                 cc += d[1];
             }
@@ -84,9 +97,11 @@ public class Piece {
         return control;
     }
 
-    
-    // Returns all legal moves for the Amazon
-    // Rules: Moves like Knight or Queen, cannot move off the board, cannot capture own pieces
+    /**
+     * PRE-condition: b is a valid Board; start is the square this piece is on.
+     * POST-condition: returns all legal moves (Amazon: Queen + Knight) that stay on board
+     *       and do NOT land on a friendly piece.
+     */
     public ArrayList<Square> getLegalMoves(Board b, Square start){
         ArrayList<Square> moves = new ArrayList<>();
         Square[][] board = b.getSquareArray();
@@ -109,7 +124,7 @@ public class Piece {
             }
         }
 
-        // Queen
+        // Queen moves
         int[][] directions = {
             {1,0},{-1,0},{0,1},{0,-1},
             {1,1},{1,-1},{-1,1},{-1,-1}
@@ -123,8 +138,8 @@ public class Piece {
                     moves.add(sq);
                 } else {
                     if (sq.getOccupyingPiece().getColor() != color)
-                        moves.add(sq); // capture
-                    break; // blocked
+                        moves.add(sq);
+                    break;
                 }
                 rr += d[0];
                 cc += d[1];

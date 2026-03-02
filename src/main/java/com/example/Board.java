@@ -12,10 +12,11 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
-//You will be implementing a part of a function and a whole function in this document. Please follow the directions for the
-//suggested order of completion that should make testing easier.
 @SuppressWarnings("serial")
 public class Board extends JPanel implements MouseListener, MouseMotionListener {
+
+    // PRE-condition: image files exist at these paths
+    // POST-condition: constants store resource paths for all piece images
     public static final String PICTURE_PATH = "/src/main/java/com/example/Pictures/";
     public static final String RESOURCES_AMAZON_PNG = PICTURE_PATH + "amazon.png";
     public static final String RESOURCES_BAMAZON_PNG = PICTURE_PATH + "blackAmazon.png";
@@ -32,22 +33,19 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     private static final String RESOURCES_WPAWN_PNG = PICTURE_PATH + "wpawn.png";
     private static final String RESOURCES_BPAWN_PNG = PICTURE_PATH + "bpawn.png";
 
-
-    // Logical and graphical representations of board
     private final Square[][] board;
     private final GameWindow g;
 
-    //contains true if it's white's turn.
     private boolean whiteTurn;
 
-    //if the player is currently dragging a piece this variable contains it.
     Piece currPiece;
     private Square fromMoveSquare;
 
-    //used to keep track of the x/y coordinates of the mouse.
     private int currX;
     private int currY;
 
+    // PRE-condition: GameWindow g is not null
+    // POST-condition: Board is initialized with 8x8 grid, pieces placed, whiteTurn = true
     public Board(GameWindow g) {
         this.g = g;
         board = new Square[8][8];
@@ -56,9 +54,6 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
 
-        //TO BE IMPLEMENTED FIRST
-        //populate the board with squares here. Note that the board is composed of 64 squares alternating from
-        //white to black.
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 boolean isWhiteSquare = (row + col) % 2 == 0;
@@ -77,15 +72,11 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         whiteTurn = true;
     }
 
-    //set up the board such that the black pieces are on one side and the white pieces are on the other.
-    //since we only have one kind of piece for now you need only set the same number of pieces on either side.
-    //it's up to you how you wish to arrange your pieces.
+    // PRE-condition: board squares are created
+    // POST-condition: initial pieces are placed in starting positions
     void initializePieces() {
-        
-
-        // Amazons 
-        board[7][3].put(new Piece(true,   RESOURCES_AMAZON_PNG));
-        board[0][3].put(new Piece(false, RESOURCES_BAMAZON_PNG ));
+        board[7][3].put(new Piece(true, RESOURCES_AMAZON_PNG));
+        board[0][3].put(new Piece(false, RESOURCES_BAMAZON_PNG));
     }
 
     public Square[][] getSquareArray() {
@@ -104,6 +95,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         return this.currPiece;
     }
 
+    // PRE: board squares exist and may contain pieces
+    // POST: board and dragged piece (if any) are drawn to screen
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -122,6 +115,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         }
     }
 
+    // PRE-condition: user clicks within board
+    // POST-condition: if valid piece selected (correct turn), legal moves are shown and piece is readied for dragging
     @Override
     public void mousePressed(MouseEvent e) {
         currX = e.getX();
@@ -130,48 +125,42 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         Square sq = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
 
         if (sq.isOccupied()) {
-    Piece p = sq.getOccupyingPiece();
+            Piece p = sq.getOccupyingPiece();
 
-   
-    if (whiteTurn && !p.getColor()) return;   // white's turn, but piece is black
-    if (!whiteTurn && p.getColor()) return;   // black's turn, but piece is white
+            if (whiteTurn != p.getColor()) return;
 
-    
-    currPiece = p;
-    fromMoveSquare = sq;
+            currPiece = p;
+            fromMoveSquare = sq;
 
-            for(Square s: currPiece.getLegalMoves(this, sq)){
+            for (Square s : currPiece.getLegalMoves(this, sq)) {
                 s.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, Color.RED));
             }
-            if (currPiece.getColor() != whiteTurn)
-                return;
+
             sq.setDisplay(false);
         }
         repaint();
     }
 
-    //should move the piece to the desired location only if this is a legal move.
-    //use the pieces "legal move" function to determine if this move is legal, then complete it by
-    //moving the new piece to its new board location.
+    // PRE-condition: user releases mouse, piece may be selected
+    // POST-condition: if move is legal, piece moves and turn switches; otherwise piece returns to original square
     @Override
     public void mouseReleased(MouseEvent e) {
-         
-        if (fromMoveSquare != null) 
-    fromMoveSquare.setDisplay(true);
-        
-        
-        for(Square [] row: board){
-            for(Square s: row){
+
+        if (fromMoveSquare != null)
+            fromMoveSquare.setDisplay(true);
+
+        for (Square[] row : board) {
+            for (Square s : row) {
                 s.setBorder(null);
             }
         }
+
         if (currPiece == null) return;
 
         Square endSquare = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
         ArrayList<Square> legal = currPiece.getLegalMoves(this, fromMoveSquare);
 
         if (endSquare != null && legal.contains(endSquare)) {
-            // Move piece
             endSquare.put(currPiece);
             fromMoveSquare.put(null);
             whiteTurn = !whiteTurn;
@@ -183,6 +172,8 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         repaint();
     }
 
+    // PRE-condition: mouse is dragging while a piece is active
+    // POST-condition: updates drag position and repaints board
     @Override
     public void mouseDragged(MouseEvent e) {
         currX = e.getX();
@@ -194,12 +185,4 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     @Override public void mouseClicked(MouseEvent e) {}
     @Override public void mouseEntered(MouseEvent e) {}
     @Override public void mouseExited(MouseEvent e) {}
-
-
-
-
-
-
-    
-
 }

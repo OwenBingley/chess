@@ -80,19 +80,25 @@ public class Square extends JComponent {
 
 
    
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-       
-        if (this.color) {
-            g.setColor(new Color(221,192,127));
-        } else {
-            g.setColor(new Color(101,67,33));
-        }
-       
-        g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-       
-        if(occupyingPiece != null && dispPiece) {
-            occupyingPiece.draw(g, this);
-        }
+    /**
+ * PRE-condition: g is a valid Graphics object; this Square has its color and size initialized.
+ * POST-condition: draws this square as its correct color; if a piece is occupying this square
+ *       and display is enabled, draws the piece on top of the square.
+ */
+@Override
+public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+   
+    if (this.color) {
+        g.setColor(new Color(221,192,127)); // light square
+    } else {
+        g.setColor(new Color(101,67,33));  // dark square
     }
+   
+    g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+   
+    if(occupyingPiece != null && dispPiece) {
+        occupyingPiece.draw(g, this);
+    }
+}
 }
