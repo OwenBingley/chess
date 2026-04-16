@@ -1,24 +1,25 @@
 package com.example;
 
-import java.io.*;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.imageio.ImageIO;
 
 public class Piece {
+
     private boolean color;
     private BufferedImage img;
 
     public Piece(boolean color, String img_file) {
         this.color = color;
+
         try {
             if (this.img == null) {
-                this.img = ImageIO.read(new File(System.getProperty("user.dir")
-                        + img_file));
+                String path = System.getProperty("user.dir") + "/" + img_file;
+                this.img = ImageIO.read(new File(path));
             }
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
@@ -39,21 +40,18 @@ public class Piece {
         g.drawImage(this.img, x, y, null);
     }
 
-    // to be overriden in each subclass
+    // override in subclasses
     public ArrayList<Square> getLegalMoves(Board b, Square currentSquare) {
-        return null;
+        return new ArrayList<>();
     }
 
-    // make sure to override this!
+    @Override
     public String toString() {
-        if (color)
-            return "white";
-        else
-            return "black";
+        return color ? "white" : "black";
     }
 
-    // to be implemented by each subclass
+    // override in subclasses
     public ArrayList<Square> getControlledSquares(Square[][] board, Square currentSquare) {
-        return null;
+        return new ArrayList<>();
     }
 }

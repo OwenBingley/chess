@@ -72,13 +72,14 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         whiteTurn = true;
     }
 
-    // PRE-condition: board squares are created
-    // POST-condition: initial pieces are placed in starting positions
-    void initializePieces() {
-        board[7][3].put(new Piece(true, RESOURCES_AMAZON_PNG));
-        board[0][3].put(new Piece(false, RESOURCES_BAMAZON_PNG));
-    }
+    public void initializePieces() {
 
+    // White Amazon
+    board[7][3].put(new Amazon(true, RESOURCES_AMAZON_PNG));
+         
+    // Black Amazon
+    board[0][3].put(new Amazon(false, RESOURCES_BAMAZON_PNG));
+}
     public Square[][] getSquareArray() {
         return this.board;
     }

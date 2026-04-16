@@ -88,16 +88,17 @@ public class Square extends JComponent {
 @Override
 public void paintComponent(Graphics g) {
     super.paintComponent(g);
-   
+
     if (this.color) {
-        g.setColor(new Color(221,192,127)); // light square
+        g.setColor(new Color(221, 192, 127)); // light square
     } else {
-        g.setColor(new Color(101,67,33));  // dark square
+        g.setColor(new Color(101, 67, 33));   // dark square
     }
-   
-    g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-   
-    if(occupyingPiece != null && dispPiece) {
+
+    // IMPORTANT FIX: use local coordinates (0,0)
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+    if (occupyingPiece != null && dispPiece) {
         occupyingPiece.draw(g, this);
     }
 }
