@@ -18,8 +18,10 @@ public class Piece {
 
         try {
             if (this.img == null) {
-                String path = System.getProperty("user.dir") + "/" + img_file;
-                this.img = ImageIO.read(new File(path));
+                String path = img_file;
+                
+                this.img = ImageIO.read(new File(System.getProperty("user.dir")+path));
+                System.out.println("doesn't work: "+System.getProperty("user.dir")+path);
             }
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());

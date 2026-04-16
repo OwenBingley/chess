@@ -9,10 +9,7 @@ public class Amazon extends Piece {
         super(isWhite, img_file);
     }
 
-    @Override
-    public void draw(Graphics g, Square currentSquare) {
-        super.draw(g, currentSquare);
-    }
+
 
     @Override
     public ArrayList<Square> getControlledSquares(Square[][] board, Square start) {

@@ -75,7 +75,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public void initializePieces() {
 
     // White Amazon
-    board[7][3].put(new Amazon(true, RESOURCES_AMAZON_PNG));
+    board[7][3].put(new Piece(true, RESOURCES_BPAWN_PNG));
          
     // Black Amazon
     board[0][3].put(new Amazon(false, RESOURCES_BAMAZON_PNG));
