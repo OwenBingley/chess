@@ -17,7 +17,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
     // PRE-condition: image files exist at these paths
     // POST-condition: constants store resource paths for all piece images
-    public static final String PICTURE_PATH = "/src/main/java/com/example/Pictures/";
+    public static final String PICTURE_PATH = "/workspaces/chess/src/main/java/com/example/Pictures/";
     public static final String RESOURCES_AMAZON_PNG = PICTURE_PATH + "amazon.png";
     public static final String RESOURCES_BAMAZON_PNG = PICTURE_PATH + "blackAmazon.png";
     private static final String RESOURCES_WBISHOP_PNG = PICTURE_PATH + "wbishop.png";
@@ -31,7 +31,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     private static final String RESOURCES_BQUEEN_PNG = PICTURE_PATH + "bqueen.png";
     private static final String RESOURCES_WQUEEN_PNG = PICTURE_PATH + "wqueen.png";
     private static final String RESOURCES_WPAWN_PNG = PICTURE_PATH + "wpawn.png";
-    private static final String RESOURCES_BPAWN_PNG = PICTURE_PATH + "bpawn.png";
+    private static final String RESOURCES_BPAWN_PNG = PICTURE_PATH + "bp.png";
 
     private final Square[][] board;
     private final GameWindow g;
@@ -75,7 +75,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public void initializePieces() {
 
     // White Amazon
-    board[7][3].put(new Piece(true, RESOURCES_BPAWN_PNG));
+    board[7][3].put(new Amazon(true, RESOURCES_AMAZON_PNG));
          
     // Black Amazon
     board[0][3].put(new Amazon(false, RESOURCES_BAMAZON_PNG));
@@ -106,15 +106,20 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
                 Square sq = board[x][y];
                 if (sq == fromMoveSquare)
                     sq.setBorder(BorderFactory.createLineBorder(Color.blue));
-                sq.paintComponent(g);
             }
         }
-
-        if (currPiece != null) {
-            final Image img = currPiece.getImage();
-            g.drawImage(img, currX - 24, currY - 24, 48, 48, null);
-        }
     }
+
+    @Override
+    public void paint(Graphics g) {
+    super.paint(g); // paints Board + all Squares FIRST
+
+    // NOW draw dragged piece on top
+    if (currPiece != null) {
+        Image img = currPiece.getImage();
+        g.drawImage(img, currX - 24, currY - 24, 48, 48, null);
+    }
+}
 
     // PRE-condition: user clicks within board
     // POST-condition: if valid piece selected (correct turn), legal moves are shown and piece is readied for dragging
@@ -187,3 +192,5 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     @Override public void mouseEntered(MouseEvent e) {}
     @Override public void mouseExited(MouseEvent e) {}
 }
+
+

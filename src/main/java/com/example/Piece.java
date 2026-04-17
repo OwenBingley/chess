@@ -19,9 +19,7 @@ public class Piece {
         try {
             if (this.img == null) {
                 String path = img_file;
-                
-                this.img = ImageIO.read(new File(System.getProperty("user.dir")+path));
-                System.out.println("doesn't work: "+System.getProperty("user.dir")+path);
+                this.img = ImageIO.read(new File(path));
             }
         } catch (IOException e) {
             System.out.println("File not found: " + e.getMessage());
@@ -37,9 +35,7 @@ public class Piece {
     }
 
     public void draw(Graphics g, Square currentSquare) {
-        int x = currentSquare.getX();
-        int y = currentSquare.getY();
-        g.drawImage(this.img, x, y, null);
+       g.drawImage(this.img, 0, 0, currentSquare.getWidth(), currentSquare.getHeight(), null);
     }
 
     // override in subclasses
@@ -57,3 +53,4 @@ public class Piece {
         return new ArrayList<>();
     }
 }
+
