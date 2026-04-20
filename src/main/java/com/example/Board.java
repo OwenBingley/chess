@@ -79,6 +79,26 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
          
     // Black Amazon
     board[0][3].put(new Amazon(false, RESOURCES_BAMAZON_PNG));
+
+
+    // white king
+   board[7][4].put(new King(true,RESOURCES_WKING_PNG ));
+
+   // black king
+   board[0][4].put(new King(false, RESOURCES_BKING_PNG ));
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
     public Square[][] getSquareArray() {
         return this.board;
@@ -121,6 +141,11 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     }
 }
 
+     public boolean isInCheck(boolean inCheck){
+
+     }
+
+
     // PRE-condition: user clicks within board
     // POST-condition: if valid piece selected (correct turn), legal moves are shown and piece is readied for dragging
     @Override
@@ -149,6 +174,9 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
     // PRE-condition: user releases mouse, piece may be selected
     // POST-condition: if move is legal, piece moves and turn switches; otherwise piece returns to original square
+    
+    
+    
     @Override
     public void mouseReleased(MouseEvent e) {
 
