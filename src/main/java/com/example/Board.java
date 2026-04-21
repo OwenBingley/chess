@@ -75,10 +75,10 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public void initializePieces() {
 
     // White Amazon
-    board[7][3].put(new Amazon(true, RESOURCES_AMAZON_PNG));
+    board[7][5].put(new Amazon(true, RESOURCES_AMAZON_PNG));
          
     // Black Amazon
-    board[0][3].put(new Amazon(false, RESOURCES_BAMAZON_PNG));
+    board[0][5].put(new Amazon(false, RESOURCES_BAMAZON_PNG));
 
 
     // white king
@@ -88,15 +88,21 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
    board[0][4].put(new King(false, RESOURCES_BKING_PNG ));
 
   // white knight
-  board[7][5].put(new Knight(true,RESOURCES_WKNIGHT_PNG ));
+  board[7][7].put(new Knight(true,RESOURCES_WKNIGHT_PNG ));
+  board[7][2].put(new Knight(true,RESOURCES_WKNIGHT_PNG ));
 
   // black knight
-  board[0][5].put(new Knight(false, RESOURCES_BKNIGHT_PNG));
+  board[0][7].put(new Knight(false, RESOURCES_BKNIGHT_PNG));
+  board[0][2].put(new Knight(false,RESOURCES_BKNIGHT_PNG ));
 
  // white bishop
  board[7][6].put(new Bishop(true, RESOURCES_WBISHOP_PNG));
+  board[7][3].put(new Bishop(true, RESOURCES_WBISHOP_PNG));
+
  // black bishop
  board[0][6].put(new Bishop(false , RESOURCES_BBISHOP_PNG));
+  board[0][3].put(new Bishop(false , RESOURCES_BBISHOP_PNG));
+
  // white pawns
 for(int m = 0; m < 8; m++ ){
 board[6][m].put(new Pawn(true,RESOURCES_WPAWN_PNG ));
@@ -140,7 +146,8 @@ board[1][k].put(new Pawn(false,RESOURCES_BPAWN_PNG ));
             }
         }
     }
-
+  //pre-condition: board and dragged piece (if any) exist
+    //post-condition: board is drawn first, then dragged piece is drawn on top (if any)
     @Override
     public void paint(Graphics g) {
     super.paint(g); // paints Board + all Squares FIRST
@@ -151,7 +158,8 @@ board[1][k].put(new Pawn(false,RESOURCES_BPAWN_PNG ));
         g.drawImage(img, currX - 24, currY - 24, 48, 48, null);
     }
 }
-
+// pre condition: kingColor is the color of the king to check
+    // post condition: returns true if the king of the specified color is in check, returns false otherwise
      public boolean isInCheck(boolean kingColor) {
         Square kingSquare = null;
 
@@ -235,10 +243,21 @@ board[1][k].put(new Pawn(false,RESOURCES_BPAWN_PNG ));
         ArrayList<Square> legal = currPiece.getLegalMoves(this, fromMoveSquare);
 
         if (endSquare != null && legal.contains(endSquare)) {
+            Piece captured = endSquare. getOccupyingPiece();
             endSquare.put(currPiece);
             fromMoveSquare.put(null);
-            whiteTurn = !whiteTurn;
+            
+            if(isInCheck(whiteTurn)){
+                fromMoveSquare.put(currPiece);
+                endSquare.put(captured);
+            
+            }else{
+                whiteTurn = !whiteTurn;
+            }
+
+            
         } else {
+            
             fromMoveSquare.setDisplay(true);
         }
 
