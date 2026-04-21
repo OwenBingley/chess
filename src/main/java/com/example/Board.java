@@ -97,15 +97,15 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
  board[7][6].put(new Bishop(true, RESOURCES_WBISHOP_PNG));
  // black bishop
  board[0][6].put(new Bishop(false , RESOURCES_BBISHOP_PNG));
-
-// white pawns
-for(int m = 0; m <= 8; m++ ){
+ // white pawns
+for(int m = 0; m < 8; m++ ){
 board[6][m].put(new Pawn(true,RESOURCES_WPAWN_PNG ));
 }
 //black pawns
-for(int k=0; k <= 8; k++ ){
+for(int k=0; k < 8; k++ ){
 board[1][k].put(new Pawn(false,RESOURCES_BPAWN_PNG ));
 }
+
 
 
 
