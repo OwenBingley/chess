@@ -141,7 +141,36 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     }
 }
 
-     public boolean isInCheck(boolean inCheck){
+     public boolean isInCheck(boolean kingColor) {
+        Square kingSquare = null;
+
+        // Find the king's square
+        for (Square[] row : board) {
+            for (Square s : row) {
+                if (s.isOccupied() && s.getOccupyingPiece() instanceof King &&
+                    s.getOccupyingPiece().getColor() == kingColor) {
+                    kingSquare = s;
+                    break;
+                }
+            }
+            if (kingSquare != null) break;
+        }
+
+        if (kingSquare == null) return false; // King not found, should not happen
+
+        // Check if any enemy piece can move to the king's square
+        for (Square[] row : board) {
+            for (Square s : row) {
+                if (s.isOccupied() && s.getOccupyingPiece().getColor() != kingColor) {
+                    Piece enemyPiece = s.getOccupyingPiece();
+                    if (enemyPiece.getLegalMoves(this, s).contains(kingSquare)) {
+                        return true; // King is in check
+                    }
+                }
+            }
+        }
+
+        return false; // King is not in check
 
      }
 
