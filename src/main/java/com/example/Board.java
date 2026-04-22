@@ -75,33 +75,33 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public void initializePieces() {
 
     // White Amazon
-    board[7][5].put(new Amazon(true, RESOURCES_AMAZON_PNG));
+    board[7][4].put(new Amazon(true, RESOURCES_AMAZON_PNG));
          
     // Black Amazon
-    board[0][5].put(new Amazon(false, RESOURCES_BAMAZON_PNG));
+    board[0][4].put(new Amazon(false, RESOURCES_BAMAZON_PNG));
 
 
     // white king
-   board[7][4].put(new King(true,RESOURCES_WKING_PNG ));
+   board[7][3].put(new King(true,RESOURCES_WKING_PNG ));
 
    // black king
-   board[0][4].put(new King(false, RESOURCES_BKING_PNG ));
+   board[0][3].put(new King(false, RESOURCES_BKING_PNG ));
 
   // white knight
-  board[7][7].put(new Knight(true,RESOURCES_WKNIGHT_PNG ));
-  board[7][2].put(new Knight(true,RESOURCES_WKNIGHT_PNG ));
+  board[7][6].put(new Knight(true,RESOURCES_WKNIGHT_PNG ));
+  board[7][1].put(new Knight(true,RESOURCES_WKNIGHT_PNG ));
 
   // black knight
-  board[0][7].put(new Knight(false, RESOURCES_BKNIGHT_PNG));
-  board[0][2].put(new Knight(false,RESOURCES_BKNIGHT_PNG ));
+  board[0][6].put(new Knight(false, RESOURCES_BKNIGHT_PNG));
+  board[0][1].put(new Knight(false,RESOURCES_BKNIGHT_PNG ));
 
  // white bishop
- board[7][6].put(new Bishop(true, RESOURCES_WBISHOP_PNG));
-  board[7][3].put(new Bishop(true, RESOURCES_WBISHOP_PNG));
+ board[7][5].put(new Bishop(true, RESOURCES_WBISHOP_PNG));
+  board[7][2].put(new Bishop(true, RESOURCES_WBISHOP_PNG));
 
  // black bishop
- board[0][6].put(new Bishop(false , RESOURCES_BBISHOP_PNG));
-  board[0][3].put(new Bishop(false , RESOURCES_BBISHOP_PNG));
+ board[0][5].put(new Bishop(false , RESOURCES_BBISHOP_PNG));
+  board[0][2].put(new Bishop(false , RESOURCES_BBISHOP_PNG));
 
  // white pawns
 for(int m = 0; m < 8; m++ ){
@@ -112,8 +112,13 @@ for(int k=0; k < 8; k++ ){
 board[1][k].put(new Pawn(false,RESOURCES_BPAWN_PNG ));
 }
 
+// white rook
+board[7][0].put(new Rook(true, RESOURCES_WROOK_PNG));
+board[7][7].put(new Rook(true, RESOURCES_WROOK_PNG));
 
-
+//black rook
+board[0][0].put(new Rook(false, RESOURCES_BROOK_PNG));
+board[0][7].put(new Rook(false, RESOURCES_BROOK_PNG));
 
 
 }
