@@ -71,9 +71,11 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
         whiteTurn = true;
     }
-
+   // precondition: board squares exist and are empty
+    // postcondition: pieces are placed in starting positions on the board
+   //
     public void initializePieces() {
-
+    
     // White Amazon
     board[7][4].put(new Amazon(true, RESOURCES_AMAZON_PNG));
          
