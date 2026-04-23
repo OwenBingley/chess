@@ -1,3 +1,8 @@
+// owen bingley
+// board
+// The Board class represents the chessboard in the game. It manages the state of the board, including the placement of pieces, handling user interactions (like dragging and dropping pieces), and determining game rules such as checking for check conditions. 
+
+
 package com.example;
 
 import java.awt.Color;
@@ -280,7 +285,7 @@ board[0][7].put(new Rook(false, RESOURCES_BROOK_PNG));
         currY = e.getY();
         repaint();
     }
-
+  // overrides for unused mouse events
     @Override public void mouseMoved(MouseEvent e) {}
     @Override public void mouseClicked(MouseEvent e) {}
     @Override public void mouseEntered(MouseEvent e) {}
